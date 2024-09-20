@@ -1,11 +1,13 @@
-<?php include("path.php") ?>
-<?php include(ROOT_PATH . "/app/controllers/users.php"); ?>
+<?php include("../../path.php"); ?>
+<?php include(ROOT_PATH . "/app/controllers/topics.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Admin Section - Edit topics</title>
     <!-- fonts awsome  -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -65,11 +67,6 @@
             font-family: 'Lora', serif;
         }
 
-        .btn-big {
-            padding: .7rem 1.3rem;
-            line-height: 1.3rem;
-        }
-
         .btn:hover {
             color: white !important;
             background: #005255;
@@ -92,30 +89,11 @@
             height: 150px;
         }
 
-
-
-        .msg {
-            width: 100%;
-            margin: 5px auto;
-            padding: 8px;
-            border-radius: 5px;
-            list-style: none;
-        }
-
-        .success {
-            color: #0e94a0;
-            border: 1px solid #0e94a0;
-            background: #bcf5bc;
-        }
-
-        .error {
-            color: #0e94a0;
-            border: 1px solid #0e94a0;
-            background: #bcf5bc;
-        }
-
-
-        /* header  */
+        /* .clearfix::after{
+            content: '';
+            display: block;
+            clear: both; */
+        /* } */
         header {
             background: #008489;
             height: 66px;
@@ -292,6 +270,7 @@
             border: 1px soli blue;
         }
 
+
         .content .main-content .post {
             width: 95%;
             height: 270px;
@@ -386,40 +365,15 @@
 
         }
 
-        /* AUTH PAGES */
-
-        .auth-content {
-            width: 30%;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 5px;
-        }
-
-        .auth-content .form-title {
-            text-align: center;
-        }
-
-        .auth-content form div {
-            margin-bottom: 10px;
-        }
-
-        .auth-content form p {
-            text-align: center;
-        }
-
-        .auth-content form p a {
-            text-decoration: underline;
-        }
-
-
-
 
         /*- FOOTER--*/
         .footer {
-            background: #008489;
+            background: #303036;
+
             color: #d3d3d3;
             height: 350px;
+            border: 1px solid ridge;
+            position: relative;
             border: 1px solid red;
         }
 
@@ -427,8 +381,9 @@
 
             height: 350px;
             display: flex;
-            flex-direction: row;
-            border: 1px solid blue;
+            border: 2px dashed blue;
+            /* flex-direction: row; */
+            /* border: 1px solid blue; */
 
         }
 
@@ -436,7 +391,7 @@
             flex: 1;
             padding: 25px;
 
-            box-sizing: border-box;
+            /* box-sizing: border-box; */
             border: 1px solid white;
         }
 
@@ -446,7 +401,7 @@
         }
 
         .footer .footer-content .about h1 span {
-            color: #05f7ff;
+            color: #0557ff;
         }
 
         .footer .footer-content .about .contact span {
@@ -490,13 +445,15 @@
         }
 
         .footer .footer-content .contact-form .contact-input {
-            background: #73dfe4;
+            background: black;
             color: #bebdbd;
             margin-bottom: 10px;
             line-height: 1.5rem;
             padding: .9rem 1.4rem;
             border: none;
-            height: 50px;
+            /* height: 50px; */
+            transition: all .3s;
+
         }
 
 
@@ -533,13 +490,11 @@
             clear: both;
         }
 
+
+
         @media only screen and (max-width:776px) {
             header {
                 position: relative;
-            }
-
-            .auth-content {
-                width: 60%;
             }
 
             header ul {
@@ -590,12 +545,6 @@
         @media only screen and (max-width:934px) {
             .content {
                 width: 100%;
-
-            }
-
-            .auth-content {
-                width: 50%;
-
             }
 
             .content .main-content {
@@ -648,10 +597,6 @@
                 height: auto;
             }
 
-            .auth-content {
-                width: 90%;
-            }
-
             .content .main-content .post .post-image {
                 width: 100%;
             }
@@ -684,49 +629,140 @@
                 -webkit-box-orient: vertical;
             }
         }
+
+        /* admin-wrapper  */
+        header {
+            background: #008489;
+        }
+
+        .admin-wrapper {
+            display: flex;
+            height: calc(100% -10px);
+        }
+
+        .admin-wrapper .left-sidebar {
+            flex: 2;
+            height: 670px;
+            background: #008489;
+            width: auto;
+
+        }
+
+        .admin-wrapper .left-sidebar ul {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+            color: aliceblue;
+        }
+
+        .admin-wrapper .left-sidebar ul li a {
+            padding: 18px;
+            display: block;
+            border-bottom: 1px solid #004044;
+        }
+
+        .admin-wrapper .left-sidebar ul li a:hover {
+            background: #004044;
+        }
+
+
+        .admin-wrapper .admin-content {
+            flex: 8;
+            height: 100%;
+            padding: 40px 100px 100px;
+            overflow-y: scroll;
+        }
+        .admin-wrapper .page-title {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1.1rem;
+        }
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #d3d3d3;
+        }
+        .edit{
+            color: green;
+        }
+        .delete{
+            color: red;
+        }
+        .publish{
+            color: blue;
+        }
+        .edit:hover,
+        .delete:hover,
+        .publish:hover{
+           text-decoration: underline; 
+        }
+        form div{
+            margin-bottom: 15px;
+        }
+
     </style>
 
 </head>
 
 <body>
     <!-- Nav bar with responsive  -->
-    <?php include(ROOT_PATH ."/app/includes/header.php"); ?>
+    <?php include(ROOT_PATH ."/app/includes/adminHeader.php"); ?>
 
-     <div class="auth-content">
-        <form action="register.php" method="post">
-            <h2 class="form-title">Register</h2>
+    <!-- end of Nav bar with responsive  -->
 
-           <?php include(ROOT_PATH ."/app/helpers/formErrors.php"); ?>
-            <div>
-                <label> Username</label>
-                <input type="text" name="username" value="<?php echo $username; ?>" class="text-input">
-            </div>
-            <div>
-                <label> Email</label>
-                <input type="email" name="email" value="<?php echo $email; ?>" class="text-input">
-            </div>
-            <div>
-                <label>Password</label>
-                <input type="password" name="password" value="<?php echo $password; ?>" class="text-input">
-            </div>
-            <div>
-                <label>Password Confirmation</label>
-                <input type="password" name="passwordConf" value="<?php echo $passwordConf; ?>" class="text-input">
-            </div>
-            <div>
-                <button type="submit" name="register-btn" class="btn btn-big">Register</button>
-            </div>
-            <p>or <a href="<?php echo BASE_URL . '/Login.php'; ?>">Sign In</a></p>
 
-         </form>
-     </div>
+    <!-- admin page wrapper -->
+    <div class="admin-wrapper">
+        <!-- left sidebar  -->
+        <?php include(ROOT_PATH ."/app/includes/adminSidebar.php"); ?>
 
-    <!--  end of Nav bar with responsive  - -->
+        <!-- //left sidebar  -->
+        <!-- admin content  -->
+        <div class="admin-content">
+            <div class="button-group">
+                <a href="create.php" class="btn btn-big">Add topics</a>
+                <a href="home.php" class="btn btn-big">Manage topics</a>
+
+            </div>
+            <div class="content">
+                <h2 class="page-title">Edit topic</h2>
+                <?php include(ROOT_PATH ."/app/helpers/formErrors.php"); ?>
+
+                <form action="edit.php" method="post">
+                <input type="hidden" name="id" value="<?php echo $id; ?>">
+
+                    <div>
+                        <label>Name</label>
+                        <input type="text" name="name" value="<?php echo $name; ?>" class="text-input">
+                    </div>
+                    <div>
+                        <label>Description</label>
+                        <textarea name="description" id="body"><?php echo $description; ?></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" name="update-topic" class="btn btn-big">Update topic</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- //admin content  -->
+
+
+    </div>
+
+
 
 
     <!-- slick crausels  -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script>
+       <!-- ckedditor  -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+   <script>
         $('.menu-toggle').on('click', function () {
             $('.nav').toggleClass('showing');
             $('.nav ul').toggleClass('showing');
@@ -767,6 +803,20 @@
                 // instead of a settings object
             ]
         });
+        ClassicEditor
+            .create(document.querySelector('#body'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                    ]
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     </script>
     <!-- slick crausels  -->
 </body>

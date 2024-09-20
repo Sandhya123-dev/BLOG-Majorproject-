@@ -1,3 +1,8 @@
+<?php include("path.php");
+// include(ROOT_PATH . "/app/database/db.php");
+ include(ROOT_PATH . "/app/controllers/topics.php");
+
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -650,7 +655,10 @@
 <body>
 
     <!-- Nav bar with responsive  -->
-   <?php include("app/include/header.php"); ?>
+   <?php include(ROOT_PATH ."/app/includes/header.php"); ?>
+   <?php include(ROOT_PATH ."/app/includes/message.php"); ?>
+
+   
     <!-- end of Nav bar with responsive  -->
 
     <!--page wrapper-->
@@ -767,13 +775,19 @@
                 <div class="section topics">
                     <h2 class="section-title">Topics</h2>
                     <ul>
-                        <li><a href="#">Poems</a></li>
-                        <li><a href="">Quotes</a></li>
+                    <?php foreach ($topics as $key=> $topic):?>
+                        <li><a href="#"><?php echo $topic['name'];?></a></li>
+
+                        <?php endforeach; ?>
+                        
+                        <!-- <li><a href="#">Poems</a></li> -->
+
+                        <!-- <li><a href="">Quotes</a></li>
                         <li><a href="">Fiction</a></li>
                         <li><a href="">Biography</a></li>
                         <li><a href="">Motivation</a></li>
                         <li><a href="">Inspiration</a></li>
-                        <li><a href="">Life Lessons</a></li>
+                        <li><a href="">Life Lessons</a></li> -->
 
                     </ul>
                 </div>
@@ -782,7 +796,7 @@
         <!-- end  content  -->
     </div>
     <!-- footer -->
-    <?php include("app/include/footer.php"); ?>
+    <?php include(ROOT_PATH ."/app/includes/footer.php"); ?>
 
 
     <!-- JQuery  -->
@@ -837,3 +851,6 @@
 </body>
 
 </html>
+
+
+

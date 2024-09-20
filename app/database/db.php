@@ -1,37 +1,121 @@
-<?php
-require('connect.php');
 
-// $sql = "SELECT* FROM users";
-// $stmt =$conn->prepare($sql);
-// $stmt->execute();
-// $users= $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-// echo "<pre>", print_r($users), "</pre>";
-// var_dump($users);
+<?php
+session_start();
+require('connect.php');
 
 function dd($value)
 {
-echo "<pre>", print_r($value, true), "</pre>";
-die();
+    echo "<pre>", print_r($value, true), "</pre>";
+    die();
 }
-function selectAll($table, $conditions=[])
+
+function executeQuery($sql, $data)
 {
     global $conn;
-    $sql = "SELECT* FROM $table";
-    if(empty($condition)){
-$stmt =$conn->prepare($sql);
-$stmt->execute();
-$records= $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-return $records;
+    $stmt = $conn->prepare($sql);
+    $values = array_values($data);
+    $types = str_repeat('s', count($values));
+    $stmt->bind_param($types, ...$values);
+    $stmt->execute();
+    return $stmt;
+}
+
+function selectAll($table, $conditions = [])
+{
+    global $conn;
+    $sql = "SELECT * FROM $table";
+    if (empty($conditions)) {
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $records = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $records;
+    } else {
+        $i = 0;
+        foreach ($conditions as $key => $value) {
+            if ($i === 0) {
+                $sql = $sql. " WHERE $key = ?";
+            } else {
+                $sql = $sql . " AND $key = ?";
+            }
+            $i++;
+        }
+
+        // dd($sql);
+        $stmt = executeQuery($sql, $conditions);
+        $records = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $records;
     }
-    else{
-$sql="SELECT *FROM $table WHERE username='BLOG' AND admin=
+}
+
+function selectOne($table, $conditions)
+{
+    global $conn;
+    $sql = "SELECT * FROM $table";
+    
+    $i = 0;
+    foreach ($conditions as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . " WHERE $key = ?";
+        } else {
+            $sql = $sql . " AND $key = ?";
+        }
+        $i++;
     }
 
+    // Add LIMIT 1 with a space before it
+    $sql = $sql . " LIMIT 1";
+
+    // dd($sql);
+    $stmt = executeQuery($sql, $conditions);
+    $records = $stmt->get_result()->fetch_assoc();
+    return $records;
 }
-$conditions={
-    'admin'=>1;
-    'username'=>'BLOG';
+
+function create($table,$data){
+    global $conn;
+    $sql = "INSERT INTO $table SET";
+    $i = 0;
+    foreach ($data as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . "  $key = ?";
+        } else {
+            $sql = $sql . " ,$key = ?";
+        }
+        $i++;
+    }
+    // dd($sql);
+    $stmt = executeQuery($sql, $data);
+    $id = $stmt->insert_id;
+    return $id;
 }
-$users=selectALL('users');
-dd($users);
+
+function update($table , $id, $data){
+    global $conn;
+    $sql = "UPDATE $table SET";
+    $i = 0;
+    foreach ($data as $key => $value) {
+        if ($i === 0) {
+            $sql = $sql . "  $key = ?";
+        } else {
+            $sql = $sql . " , $key = ?";
+        }
+        $i++;
+    }
+    // dd($sql);
+    $sql=$sql ."WHERE id=?" ;
+    $data['id']= $id;
+    $stmt = executeQuery($sql, $data);
+    // $id = $stmt->insert_id;
+    return $stmt->affected_rows;
+
+}
+function delete($table,$id){
+    global $conn;
+    $sql = "DELETE FROM $table WHERE id=?";
+    $stmt = executeQuery($sql, ['id'=>$id]);
+    // $id = $stmt->insert_id;
+    return $stmt->affected_rows;
+
+}
+
 ?>

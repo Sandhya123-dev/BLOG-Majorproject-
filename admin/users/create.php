@@ -1,3 +1,6 @@
+<?php include("../../path.php"); ?>
+<?php include(ROOT_PATH . "/app/controllers/users.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -708,81 +711,62 @@
 
 <body>
     <!-- Nav bar with responsive  -->
-    <header>
-        <div class="logo">
-            <h1 class="logo-text">
-                <span>New</span>Inspires
-            </h1>
-        </div>
-        <i class="fa fa-bars menu-toggle" aria-hidden="true"></i>
-        <ul class="nav">
+    <?php include(ROOT_PATH ."/app/includes/adminHeader.php"); ?>
 
-            <li>
-                <a href="#">
-                    <i class="fa fa-user"> </i>
-                    San jaz
-                    <i class="fa fa-chevron-down" style="font-size: .7em;"> </i>
-                </a>
-                <ul>
-                    <li><a href="#" class="logout">logout</a></li>
-                </ul>
-            </li>
-
-
-        </ul>
-    </header>
     <!-- end of Nav bar with responsive  -->
 
 
     <!-- admin page wrapper -->
     <div class="admin-wrapper">
         <!-- left sidebar  -->
-        <div class="left-sidebar">
-            <ul>
-                <li><a href="../posts/home.html">Manage Posts</a></li>
-                <li><a href="home.html">Manage users</a></li>
-                <li><a href="../topics/home.html">Manage topics</a></li>
+        <?php include(ROOT_PATH ."/app/includes/adminSidebar.php"); ?>
 
-            </ul>
-
-        </div>
-        <!-- //left sidebar  -->
+            
+          <!-- //left sidebar  -->
         <!-- admin content  -->
         <div class="admin-content">
-            <div class="buttom-group">
-                <a href="create.html" class="btn btn-big">Add User</a>
-                <a href="home.html" class="btn btn-big">Manage topics</a>
+            <div class="button-group">
+                <a href="create.php" class="btn btn-big">Add User</a>
+                <a href="home.php" class="btn btn-big">Manage topics</a>
 
             </div>
             <div class="content">
+            <?php include(ROOT_PATH ."/app/helpers/formErrors.php"); ?>
+
                 <h2 class="page-title">Add User</h2>
-                <form action="create.html" method="post">
+                <form action="create.php" method="post">
                     
-                    <div>
-                    <label > Username</label>
-                    <input type="text" name="username" class="text-input">
+                <div>
+                <label > Username</label>
+                    <input type="text" name="username"  value="<?php echo $username; ?>" class="text-input">
                 </div>
                 <div>
                     <label > Email</label>
-                    <input type="email" name="email" class="text-input">
+                    <input type="email" name="email" value="<?php echo $email; ?>" class="text-input">
                 </div>
                 <div>
                     <label >Password</label>
-                    <input type="password" name="password" class="text-input">
+                    <input type="password" name="password" value="<?php echo $password; ?>" class="text-input">
                 </div>
                 <div>
-                    <label >Re-typepassword</label>
-                    <input type="password" name="re-password" class="text-input">
+                    <label >Password Confirmation</label>
+                    <input type="password" name="passwordConf" value="<?php echo $passwordConf; ?>" class="text-input">
                 </div>
                 <div>
-                    <label>role</label>
-                    <select name="topic" class="text-input">
-                        <option value="Author">Author</option>
-                        <option value="Admin">life lessons</option>
-                    </select>
+                    <?php if(isset($admin) && $admin==1): ?>
+                    <label>
+                        <input type="checkbox" name="admin" checked >
+                        admin
+                    </label>
+                    <?php else:?>
+                        <label>
+                        <input type="checkbox" name="admin">
+                        admin
+                    </label>
+                        <?php endif; ?>
                 </div>
                     <div>
-                        <buttom type="submit" class="btn btn-big">Add User</buttom>
+                        <button type="submit" name="create-admin" class="btn btn-big">Add User</button>
                     </div>
                 </form>
             </div>
@@ -840,6 +824,20 @@
                 // instead of a settings object
             ]
         });
+        ClassicEditor
+            .create(document.querySelector('#body'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                    ]
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     </script>
     <!-- slick crausels  -->
 </body>

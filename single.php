@@ -1,3 +1,4 @@
+<?php include("path.php") ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -688,7 +689,7 @@
     
 
     <!-- Nav bar with responsive  -->
-    <?php include("app/include/header.php"); ?>
+    <?php include(ROOT_PATH ."/app/includes/header.php"); ?>
 
     <!-- end of Nav bar with responsive  -->
 
@@ -777,7 +778,7 @@
     </div>
     <!-- end  content  -->
     <!-- footer -->  
-     <?php include( ROOT_PATH . "/app/includes/footer.php"); ?>
+     <?php include(ROOT_PATH . "/app/includes/footer.php"); ?>
 
 
     <!-- JQuery  -->

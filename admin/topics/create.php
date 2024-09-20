@@ -1,3 +1,6 @@
+<?php include("../../path.php"); ?>
+<?php include(ROOT_PATH . "/app/controllers/topics.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -708,69 +711,44 @@
 
 <body>
     <!-- Nav bar with responsive  -->
-    <header>
-        <div class="logo">
-            <h1 class="logo-text">
-                <span>New</span>Inspires
-            </h1>
-        </div>
-        <i class="fa fa-bars menu-toggle" aria-hidden="true"></i>
-        <ul class="nav">
+    <?php include(ROOT_PATH ."/app/includes/adminHeader.php"); ?>
 
-            <li>
-                <a href="#">
-                    <i class="fa fa-user"> </i>
-                    San jaz
-                    <i class="fa fa-chevron-down" style="font-size: .7em;"> </i>
-                </a>
-                <ul>
-                    <li><a href="#" class="logout">logout</a></li>
-                </ul>
-            </li>
-
-
-        </ul>
-    </header>
     <!-- end of Nav bar with responsive  -->
 
 
     <!-- admin page wrapper -->
     <div class="admin-wrapper">
         <!-- left sidebar  -->
-        <div class="left-sidebar">
-            <ul>
-                <li><a href="../posts/home.html">Manage Posts</a></li>
-                <li><a href="../users/home.html">Manage users</a></li>
-                <li><a href="home.html">Manage topics</a></li>
+        <?php include(ROOT_PATH ."/app/includes/adminSidebar.php"); ?>
 
-            </ul>
-
-        </div>
         <!-- //left sidebar  -->
         <!-- admin content  -->
         <div class="admin-content">
-            <div class="buttom-group">
-                <a href="create.html" class="btn btn-big">Add topics</a>
-                <a href="home.html" class="btn btn-big">Manage topics</a>
+            <div class="button-group">
+                <a href="create.php" class="btn btn-big">Add topic</a>
+                <a href="home.php" class="btn btn-big">Manage topics</a>
 
             </div>
             <div class="content">
                 <h2 class="page-title">Add topic</h2>
-                <form action="create.html" method="post">
+                <?php include(ROOT_PATH ."/app/helpers/formErrors.php"); ?>
+
+                <form action="create.php" method="post">
                     <div>
                         <label>Name</label>
-                        <input type="text" name="name" class="text-input">
+                        <input type="text" name="name" value="<?php echo $name ?>" class="text-input">
                     </div>
                     <div>
                         <label>Description</label>
-                        <textarea name="description" id="body"></textarea>
+                        <textarea name="description" id="body"><?php echo $description ?></textarea>
                     </div>
                     <div>
-                        <buttom type="submit" class="btn btn-big">Add topic</buttom>
+                        <button type="submit" name="add-topic" class="btn btn-big">Add topic</button>
                     </div>
                 </form>
             </div>
         </div>
+        
         <!-- //admin content  -->
 
 
@@ -824,6 +802,20 @@
                 // instead of a settings object
             ]
         });
+        ClassicEditor
+            .create(document.querySelector('#body'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                    ]
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     </script>
     <!-- slick crausels  -->
 </body>

@@ -1,3 +1,7 @@
+<?php include("../../path.php"); ?>
+<?php include(ROOT_PATH . "/app/controllers/topics.php"); ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -705,54 +709,29 @@
 
 <body>
     <!-- Nav bar with responsive  -->
-    <header>
-        <div class="logo">
-            <h1 class="logo-text">
-                <span>New</span>Inspires
-            </h1>
-        </div>
-        <i class="fa fa-bars menu-toggle" aria-hidden="true"></i>
-        <ul class="nav">
+    <?php include(ROOT_PATH ."/app/includes/adminHeader.php"); ?>
 
-            <li>
-                <a href="#">
-                    <i class="fa fa-user"> </i>
-                    San jaz
-                    <i class="fa fa-chevron-down" style="font-size: .7em;"> </i>
-                </a>
-                <ul>
-                    <li><a href="#" class="logout">logout</a></li>
-                </ul>
-            </li>
-
-
-        </ul>
-    </header>
     <!-- end of Nav bar with responsive  -->
 
 
     <!-- admin page wrapper -->
     <div class="admin-wrapper">
         <!-- left sidebar  -->
-        <div class="left-sidebar">
-            <ul>
-                <li><a href="..posts/home.html">Manage Posts</a></li>
-                <li><a href="../users/home.html">Manage users</a></li>
-                <li><a href="home.html">Manage topics</a></li>
+        <?php include(ROOT_PATH ."/app/includes/adminSidebar.php"); ?>
 
-            </ul>
 
-        </div>
-        <!-- //left sidebar  -->
+         <!-- //left sidebar  -->
         <!-- admin content  -->
         <div class="admin-content">
             <div class="buttom-group">
-                <a href="create.html" class="btn btn-big">Add topic</a>
-                <a href="home.html" class="btn btn-big">Manage topics</a>
+                <a href="create.php" class="btn btn-big">Add topic</a>
+                <a href="home.php" class="btn btn-big">Manage topics</a>
 
             </div>
             <div class="content">
                 <h2 class="page-title">Manage topics</h2>
+                <?php include(ROOT_PATH ."/app/includes/message.php"); ?>
+
                 <table>
                     <thead>
                         <th>SN</th>
@@ -760,19 +739,15 @@
                         <th colspan="2">Action</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>poetry</td>
-                            <td><a href="#" class="edit">edit</a></td>
-                            <td><a href="#" class="delete">delete</a></td>
+                        <?php foreach ($topics as $key=> $topic):?>
+                         <tr>
+                            <td><?php echo $key + 1; ?></td>
+                            <td><?php echo $topic['name']; ?></td>
+                            <td><a href="edit.php?id=<?php echo $topic['id']; ?>" class="edit">edit</a></td>
+                            <td><a href="home.php?del_id=<?php echo $topic['id'];?>" class="delete">delete</a></td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>life lessons</td>
-                            <td><a href="#" class="edit">edit</a></td>
-                            <td><a href="#" class="delete">delete</a></td>
-
-                        </tr>
+                        <?php endforeach; ?>
+                        
                     </tbody>
                 </table>
             </div>
@@ -787,6 +762,8 @@
 
     <!-- slick crausels  -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.2.0/classic/ckeditor.js"></script>
+
     <script>
         $('.menu-toggle').on('click', function () {
             $('.nav').toggleClass('showing');
@@ -828,6 +805,20 @@
                 // instead of a settings object
             ]
         });
+        ClassicEditor
+            .create(document.querySelector('#body'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
+                heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                    ]
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     </script>
     <!-- slick crausels  -->
 </body>

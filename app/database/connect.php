@@ -1,17 +1,29 @@
 <?php
 $host = "localhost";
-$user = "root";
-$pass = " yes";
-$dbname = "majorproject";
+$username = "root";
+$password = "";
+$db_name = "majorproject";
 
 //  $conn= new MySQLi($host, $user, $pass, $db_name);
-$con = mysqli_connect($host, $user, $pass, $dbname);
+$conn = new mysqli($host, $username, $password, $db_name);
 
- if($con->connect_error){
-    die('Database conection error:' .$conn->$connect_error);
-
- }
- else{
-    echo "Db connection successful";
- }
- ?>
+ // Check connection 
+if ($conn->connect_error) { 
+    die("Connection failure: " 
+        . $conn->connect_error); 
+}
+// else{
+//    die("connection suscceful");
+// }  
+  
+// Creating a database named geekdata 
+// $sql = "CREATE DATABASE geekdata"; 
+// if ($conn->query($sql) === TRUE) { 
+//     echo "Database with name geekdata"; 
+// } else { 
+//     echo "Error: " . $conn->error; 
+// } 
+  
+// // Closing connection 
+// $conn->close(); 
+?> 
